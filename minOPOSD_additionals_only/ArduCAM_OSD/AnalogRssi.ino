@@ -41,7 +41,7 @@ void analog_rssi_read(void)
 {
 	if (rssiraw_on) {
 		osd_rssi = analogRead(RSSI_PIN) / 4;				// Just raw value, 0-255. We use this range to better align
-										// with the original code.
+		// with the original code.
 	} else {
 #ifdef JR_SPECIALS
 // SEARCH GLITCH
@@ -51,4 +51,32 @@ void analog_rssi_read(void)
 #endif
 		osd_rssi = constrain(osd_rssi, rssipersent, rssical);		// Ensure we stay in range
 	}
+}
+
+
+//This method was copied from the MWOSD R1.5
+
+unsigned long FastpulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
+{
+  uint8_t bit = digitalPinToBitMask(pin);
+  uint8_t port = digitalPinToPort(pin);
+  uint8_t stateMask = (state ? bit : 0);
+  unsigned long width = 0;
+  unsigned long numloops = 0;
+  unsigned long maxloops = timeout;
+	
+  while ((*portInputRegister(port) & bit) == stateMask)
+    if (numloops++ == maxloops)
+      return 0;
+	
+  while ((*portInputRegister(port) & bit) != stateMask)
+    if (numloops++ == maxloops)
+      return 0;
+	
+  while ((*portInputRegister(port) & bit) == stateMask) {
+    if (numloops++ == maxloops)
+      return 0;
+    width++;
+  }
+  return width; 
 }

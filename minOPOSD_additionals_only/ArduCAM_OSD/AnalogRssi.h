@@ -31,7 +31,7 @@
 #ifndef ANALOG_RSSI_H_
 #define ANALOG_RSSI_H_
 
-#define RSSI_PIN			1			// A1 is pin 24
+#define RSSI_PIN			3			// A1 is pin 24
 								// Any 'free' analog input will do -- A0-5 are available, 
 								// which are pins 23-28 on the ATmega328p
 
@@ -39,6 +39,7 @@
 
 void analog_rssi_init(void);
 void analog_rssi_read(void);
+unsigned long FastpulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
 
 
 #endif /* ANALOG_RSSI_H_ */

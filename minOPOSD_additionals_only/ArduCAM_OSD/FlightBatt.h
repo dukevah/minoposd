@@ -32,7 +32,7 @@
 #define FLIGHT_BATT_H_
 
 
-#define VOLTAGE_PIN			6
+#define VOLTAGE_PIN			2
 #define CURRENT_PIN			7
 
 #define REF_VOLTAGE			1.1			// INTERNAL: a built-in reference, equal to 1.1 volts on the ATmega168 or ATmega328
